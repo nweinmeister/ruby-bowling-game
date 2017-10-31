@@ -14,15 +14,38 @@ class BowlingGame
 		score = 0
 		frame_index = 0
 		for i in 0..9
-			if @rolls[frame_index] + @rolls[frame_index+1] == 10
-				score += 10 + @rolls[frame_index+2]
+			if is_spare?(frame_index)
+				score += score_spare(frame_index)
 				frame_index += 2
+			elsif is_strike?(frame_index)
+				score += score_strike(frame_index)
+				frame_index += 1
 			else
-				score += @rolls[frame_index] + @rolls[frame_index+1]
+				score += score_normal(frame_index)
 				frame_index += 2
 			end
 		end
 		score
+	end
+
+	def is_spare?(frame_index)
+		@rolls[frame_index] + @rolls[frame_index+1] == 10
+	end
+
+	def is_strike?(frame_index)
+		@rolls[frame_index] == 10
+	end
+
+	def score_normal(frame_index)
+		@rolls[frame_index] + @rolls[frame_index+1]
+	end
+
+	def score_spare(frame_index)
+		10 + @rolls[frame_index+2]
+	end
+
+	def score_strike(frame_index)
+		10 + @rolls[frame_index+1] + @rolls[frame_index+2]
 	end
 end
 
