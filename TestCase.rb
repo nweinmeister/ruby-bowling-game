@@ -4,7 +4,6 @@ class TestCase
 	end
 
 	def run_tests
-		setup
 		my_methods = self.class.instance_methods(false)
 		my_methods.each do |my_method|
 			split_string = my_method.to_s.split("_")
@@ -14,6 +13,7 @@ class TestCase
 	end
 
 	def run_test(method_name)
+		setup
 		self.send(method_name)
 	end
 
